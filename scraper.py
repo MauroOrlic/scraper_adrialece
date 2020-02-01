@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from copy import deepcopy
 from urllib.request import urlopen
 from dataclasses import dataclass
 from typing import Collection
@@ -91,7 +90,10 @@ class Glasses:
                 wanted_row = tr
                 break
 
-        frame_shape = wanted_row.find('td').find('a').contents[0]
+        try:
+            frame_shape = wanted_row.find('td').find('a').contents[0]
+        except UnboundLocalError:
+            frame_shape = None
 
         return frame_shape
 

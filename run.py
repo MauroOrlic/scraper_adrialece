@@ -20,6 +20,7 @@ with open('naocale.csv', mode='w') as file:
     writer.writerow([
         'Ime',
         'Cijena',
+        'Oblik okvira',
         'Ukupna širina',
         'Širina nosa',
         'Dužina ruke',
@@ -36,6 +37,7 @@ with open('naocale.csv', mode='w') as file:
         writer.writerow([
             glasses.name,
             glasses.price,
+            glasses.frame_shape,
             glasses.dimensions.width,
             glasses.dimensions.bridge_width,
             glasses.dimensions.arm_length,
