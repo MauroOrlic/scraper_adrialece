@@ -76,7 +76,7 @@ class Glasses:
         anchor = soup.find('div', {'class': 'product-main-price-wrapper'})
         anchor = anchor.find('span')
         anchor = anchor.find('span')
-        price = float(anchor.contents[0])
+        price = float(anchor.contents[0].replace(' ', ''))
         return price
 
     @staticmethod

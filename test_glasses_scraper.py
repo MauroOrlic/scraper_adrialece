@@ -4,11 +4,13 @@ from scraper import Glasses, GlassesDimensions
 glasses_objects = [
     Glasses('https://www.adrialece.hr/crulle-s1725-c4'),
     Glasses('https://www.adrialece.hr/boss-orange-bo-0324-2w7'),
-    Glasses('https://www.adrialece.hr/carrera-ca6623-8fx')
+    Glasses('https://www.adrialece.hr/carrera-ca6623-8fx'),
+    Glasses('https://www.adrialece.hr/christian-dior-blacktie236-tsj')
 ]
 expected = {'name': ['Crullé S1725 C4',
                      'Boss Orange BO 0324/2W7',
-                     'Carrera CA6623 8FX'],
+                     'Carrera CA6623 8FX',
+                     'Christian Dior Blacktie236 TSJ'],
             'dimensions': [GlassesDimensions(width=137,
                                              bridge_width=16,
                                              lens_height=38,
@@ -22,13 +24,20 @@ expected = {'name': ['Crullé S1725 C4',
                                              lens_height=35,
                                              lens_width=54,
                                              arm_length=145),
+                           GlassesDimensions(width=136,
+                                             bridge_width=21,
+                                             lens_height=43,
+                                             lens_width=50,
+                                             arm_length=150)
                            ],
             'price': [189.0,
                       639.0,
-                      599.0],
+                      599.0,
+                      1439.0],
             'frame_shape': ['Četvrtasti',
                             'Pravokutan',
-                            'Pravokutan']
+                            'Pravokutan',
+                            'Panthos']
             }
 
 
