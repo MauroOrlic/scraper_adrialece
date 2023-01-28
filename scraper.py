@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from bs4.element import Tag
+from bs4.element import Tag, ResultSet
 from urllib.request import urlopen
 from dataclasses import dataclass
 from typing import Collection
@@ -10,8 +10,9 @@ def get_glasses_urls(url: str) -> Collection[str]:
     glasses = []
     with urlopen(url) as response:
         soup = BeautifulSoup(response, 'html.parser')
-        for anchor in soup.find_all('div', {'class': 'product-name-wrapper desktop'}):
-            glasses.append(anchor.find('a')['href'])
+        anchor = soup.find('div', {'class': 'products products-glasses'})
+        for a in anchor.find_all('a'):
+            glasses.append(a['href'])
     return glasses
 
 
@@ -72,26 +73,25 @@ class Glasses:
     @staticmethod
     def _get_price(page: HTTPResponse, parser: str) -> float:
         soup = BeautifulSoup(page, parser)
-        anchor = soup.find('div', {'class': 'product-main-price-wrapper'})
-        anchor = anchor.find('span')
-        anchor = anchor.find('span')
-        price = float(anchor.contents[0].replace(' ', ''))
+        anchor = soup.find('span', {'class': 'product-main-price-total'})
+        anchor = anchor.find('meta', attrs={'itemprop': 'price'})
+        price = float(anchor.get('content'))
         return price
 
     @staticmethod
     def _get_frame_shape(page: HTTPResponse, parser: str) -> str:
         soup = BeautifulSoup(page, parser)
-        anchor = soup.find('table', {'class': 'product-properties-table'})
-        anchor = anchor.find_all('tr')
+        anchor: Tag = soup.find('table', {'class': 'product-properties-table'})
 
-        for tr in anchor:
-            header = tr.find('th').contents[0]
-            if header == 'Oblik okvira:':
+        wanted_row = None
+        for tr in anchor.find_all('tr'):
+            tr: Tag
+            if tr.find('th').contents[0].strip() == 'Oblik okvira:':
                 wanted_row = tr
                 break
 
         try:
-            frame_shape = wanted_row.find('td').find('a').contents[0]
+            frame_shape = wanted_row.find('td').find('a').contents[0].strip()
         except UnboundLocalError:
             frame_shape = None
 
@@ -111,9 +111,9 @@ class Glasses:
     def _get_dim_width(page: HTTPResponse, parser: str) -> int:
         soup = BeautifulSoup(page, parser)
 
-        if soup.find_all('div', {'class': 'dimensions dim-4'}):
-            anchor = soup.find('div', {'class': 'dimensions dim-4'})
-            anchor = anchor.find('span')
+        if soup.find_all('div', {'class': 'glasses-dimensions dim-4-color'}):
+            anchor: Tag = soup.find('div', {'class': 'glasses-dimensions dim-4-color'})
+            anchor = anchor.find('span', {'class': 'glasses-dimension-text colored'})
             width = int(anchor.contents[0].split()[0])
         else:
             width = None
@@ -124,9 +124,9 @@ class Glasses:
     def _get_dim_bridge_width(page: HTTPResponse, parser: str) -> int:
         soup = BeautifulSoup(page, parser)
 
-        if soup.find_all('div', {'class': 'dimensions dim-2'}):
-            anchor = soup.find('div', {'class': 'dimensions dim-2'})
-            anchor = anchor.find('span')
+        if soup.find_all('div', {'class': 'glasses-dimensions dim-2'}):
+            anchor = soup.find('div', {'class': 'glasses-dimensions dim-2'})
+            anchor = anchor.find('span', {'class': 'glasses-dimension-text'})
             bridge_width = int(anchor.contents[0].split()[0])
         else:
             bridge_width = None
@@ -137,8 +137,8 @@ class Glasses:
     def _get_dim_arm_length(page: HTTPResponse, parser: str) -> int:
         soup = BeautifulSoup(page, parser)
 
-        if soup.find_all('div', {'class': 'dimensions dim-1'}):
-            anchor = soup.find('div', {'class': 'dimensions dim-1'})
+        if soup.find_all('div', {'class': 'glasses-dimensions dim-1'}):
+            anchor = soup.find('div', {'class': 'glasses-dimensions dim-1'})
             anchor = anchor.find('span')
             arm_length = int(anchor.contents[0].split()[0])
         else:
@@ -150,8 +150,8 @@ class Glasses:
     def _get_dim_lens_width(page: HTTPResponse, parser: str) -> int:
         soup = BeautifulSoup(page, parser)
 
-        if soup.find_all('div', {'class': 'dimensions dim-3'}):
-            anchor = soup.find('div', {'class': 'dimensions dim-3'})
+        if soup.find_all('div', {'class': 'glasses-dimensions dim-3'}):
+            anchor = soup.find('div', {'class': 'glasses-dimensions dim-3'})
             anchor = anchor.find_all('span')
             try:
                 lens_width = int(anchor[1].contents[0].split()[0])
@@ -166,8 +166,8 @@ class Glasses:
     def _get_dim_lens_height(page: HTTPResponse, parser: str) -> int:
         soup = BeautifulSoup(page, parser)
 
-        if soup.find_all('div', {'class': 'dimensions dim-3'}):
-            anchor = soup.find('div', {'class': 'dimensions dim-3'})
+        if soup.find_all('div', {'class': 'glasses-dimensions dim-3'}):
+            anchor = soup.find('div', {'class': 'glasses-dimensions dim-3'})
             anchor = anchor.find_all('span')
             try:
                 lens_height = int(anchor[0].contents[0].split()[0])

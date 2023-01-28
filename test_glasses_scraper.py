@@ -2,52 +2,40 @@ import pytest
 from scraper import Glasses, GlassesDimensions
 
 glasses_objects = [
-    Glasses('https://www.adrialece.hr/crulle-s1725-c4'),
-    Glasses('https://www.adrialece.hr/boss-orange-bo-0324-2w7'),
-    Glasses('https://www.adrialece.hr/carrera-ca6623-8fx'),
-    Glasses('https://www.adrialece.hr/christian-dior-blacktie236-tsj'),
-    Glasses('https://www.adrialece.hr/ray-ban-rx7017-5196')
+    Glasses('https://www.adrialece.hr/crulle-odyssey-c4'),
+    Glasses('https://www.adrialece.hr/crulle-titanium-1124-c1'),
 ]
-expected = {'name': ['Crullé S1725 C4',
-                     'Boss Orange BO 0324/2W7',
-                     'Carrera CA6623 8FX',
-                     'Christian Dior Blacktie236 TSJ',
-                     'Ray-Ban RX7017 - 5196'],
-            'dimensions': [GlassesDimensions(width=137,
-                                             bridge_width=16,
-                                             lens_height=38,
-                                             lens_width=54,
-                                             arm_length=140),
-                           GlassesDimensions(bridge_width=19,
-                                             lens_width=57,
-                                             arm_length=145),
-                           GlassesDimensions(width=140,
-                                             bridge_width=19,
-                                             lens_height=35,
-                                             lens_width=54,
-                                             arm_length=145),
-                           GlassesDimensions(width=136,
-                                             bridge_width=21,
-                                             lens_height=43,
-                                             lens_width=50,
-                                             arm_length=150),
-                           GlassesDimensions(width=142,
-                                             bridge_width=17,
-                                             lens_height=36,
-                                             lens_width=54,
-                                             arm_length=145)
-                           ],
-            'price': [189.0,
-                      639.0,
-                      599.0,
-                      1439.0,
-                      679.0],
-            'frame_shape': ['Četvrtasti',
-                            'Pravokutan',
-                            'Pravokutan',
-                            'Panthos',
-                            None]
-            }
+expected = {
+    'name': [
+        'Crullé Odyssey C4',
+        'Crullé Titanium 1124 C1'
+    ],
+    'dimensions': [
+        GlassesDimensions(
+            width=137,
+            bridge_width=18,
+            lens_height=42,
+            lens_width=51,
+            arm_length=145
+        ),
+        GlassesDimensions(
+            width=135,
+            bridge_width=17,
+            lens_height=46,
+            lens_width=52,
+            arm_length=146
+        ),
+
+    ],
+    'price': [
+        9.9,
+        25.94
+    ],
+    'frame_shape': [
+        'Četvrtasti',
+        'Pilot'
+    ]
+}
 
 
 class TestGlasses:

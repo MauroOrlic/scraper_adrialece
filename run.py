@@ -15,7 +15,7 @@ glasses_category_url = GLASSES_CORRECTIONAL_MALE_URL
 logger.info(f"Getting glasses URLs for page '{glasses_category_url}'")
 glasses_urls = get_glasses_urls(glasses_category_url)
 
-with open('naocale.csv', mode='w') as file:
+with open('naocale.csv', mode='w', encoding='utf-8', newline='') as file:
     writer = writer(file, delimiter=',', quotechar='"', quoting=QUOTE_ALL)
     writer.writerow([
         'Ime',
