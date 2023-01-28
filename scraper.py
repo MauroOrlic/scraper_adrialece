@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
-from bs4.element import Tag, ResultSet
+from bs4.element import Tag
+from time import sleep
 from urllib.request import urlopen
+from urllib.error import HTTPError
 from dataclasses import dataclass
 from typing import Collection
 from http.client import HTTPResponse
@@ -28,7 +30,7 @@ class GlassesDimensions:
 class Glasses:
     def __init__(self, url: str, parser='html.parser'):
         self._url = url
-        self._glasses_page: HTTPResponse = urlopen(self.url).read()
+        self._glasses_page: HTTPResponse = self._get_glasses_page(self._url)
         self._parser = parser
         self._name: str = None
         self._dimensions: GlassesDimensions = None
@@ -64,6 +66,17 @@ class Glasses:
         return self._frame_shape
 
     @staticmethod
+    def _get_glasses_page(url: str):
+        attempts = 0
+        try:
+            return urlopen(url).read()
+        except HTTPError:
+            if attempts >= 5:
+                raise
+            attempts += 1
+            sleep(3 * attempts)
+
+    @staticmethod
     def _get_name(page: HTTPResponse, parser: str):
         soup = BeautifulSoup(page, parser)
         product_name: Tag = soup.find('h1', {'class': 'product-name'})
@@ -92,7 +105,7 @@ class Glasses:
 
         try:
             frame_shape = wanted_row.find('td').find('a').contents[0].strip()
-        except UnboundLocalError:
+        except (UnboundLocalError, AttributeError):
             frame_shape = None
 
         return frame_shape
