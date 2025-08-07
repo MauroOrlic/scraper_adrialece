@@ -2,38 +2,61 @@ import pytest
 from scraper import Glasses, GlassesDimensions
 
 glasses_objects = [
-    Glasses('https://www.adrialece.hr/crulle-odyssey-c4'),
-    Glasses('https://www.adrialece.hr/crulle-titanium-1124-c1'),
+    Glasses('https://www.adrialece.hr/crulle-fort-c6'),
+    Glasses('https://www.adrialece.hr/crulle-artsy-c1'),
+    Glasses('https://www.adrialece.hr/ray-ban-rb4181-601-87'),
+    Glasses('https://www.adrialece.hr/ray-ban-rb4171-622-t3')
 ]
 expected = {
     'name': [
-        'Crullé Odyssey C4',
-        'Crullé Titanium 1124 C1'
+        'Crullé Fort C6',
+        'Crullé Artsy C1',
+        'Ray-Ban RB4181 601/87',
+        'Ray-Ban RB4171 622/T3'
+
     ],
     'dimensions': [
         GlassesDimensions(
-            width=137,
+            width=138,
             bridge_width=18,
             lens_height=42,
-            lens_width=51,
+            lens_width=53,
+            arm_length=138
+        ),
+        GlassesDimensions(
+            width=138,
+            bridge_width=20,
+            lens_height=44,
+            lens_width=53,
+            arm_length=142
+        ),
+        GlassesDimensions(
+            width=143,
+            bridge_width=16,
+            lens_height=42,
+            lens_width=57,
             arm_length=145
         ),
         GlassesDimensions(
-            width=135,
-            bridge_width=17,
+            width=None,
+            bridge_width=18,
             lens_height=46,
-            lens_width=52,
-            arm_length=146
+            lens_width=54,
+            arm_length=145
         ),
 
     ],
     'price': [
-        9.9,
-        25.94
+        28.90,
+        33.90,
+        136.90,
+        132.00
     ],
     'frame_shape': [
         'Četvrtasti',
-        'Pilot'
+        'Šesterokutan',
+        'Pravokutan',
+        'Oval / Elipse'
     ]
 }
 

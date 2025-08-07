@@ -1,5 +1,5 @@
 from scraper import get_glasses_urls, Glasses
-from constants import GLASSES_CORRECTIONAL_MALE_URL
+from constants import GLASSES_CORRECTIONAL_SUNGLASSES_MALE_URL
 from csv import writer, QUOTE_ALL
 from logging import getLogger, INFO, StreamHandler
 import sys
@@ -9,7 +9,7 @@ logger.setLevel(INFO)
 logger.addHandler(StreamHandler(sys.stdout))
 
 # =======================================================================
-glasses_category_url = GLASSES_CORRECTIONAL_MALE_URL
+glasses_category_url = GLASSES_CORRECTIONAL_SUNGLASSES_MALE_URL
 
 # =======================================================================
 logger.info(f"Getting glasses URLs for page '{glasses_category_url}'")
